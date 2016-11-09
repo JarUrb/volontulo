@@ -144,9 +144,8 @@ class Register(View):
             )
             user.is_active = False
             user.save()
-            profile = UserProfile(user=user)
+            profile = user.userprofile
             ctx['uuid'] = profile.uuid
-            profile.save()
         except IntegrityError:
             # if attempt failed, because user already exists we need show
             # error message:

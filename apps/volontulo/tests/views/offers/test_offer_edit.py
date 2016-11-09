@@ -10,7 +10,6 @@ from django.test import TestCase
 
 from apps.volontulo.models import Offer
 from apps.volontulo.models import Organization
-from apps.volontulo.models import UserProfile
 
 
 class TestOffersEdit(TestCase):
@@ -33,10 +32,7 @@ class TestOffersEdit(TestCase):
             cls.organization_user_password
         )
         organization_user.save()
-        cls.organization_profile = UserProfile(
-            user=organization_user
-        )
-        cls.organization_profile.save()
+        cls.organization_profile = organization_user.userprofile
         cls.organization_profile.organizations.add(cls.organization)
         cls.offer = Offer.objects.create(
             organization=cls.organization,

@@ -10,7 +10,6 @@ from django.test import TestCase
 
 from apps.volontulo.models import Offer
 from apps.volontulo.models import Organization
-from apps.volontulo.models import UserProfile
 
 
 class TestOffersArchived(TestCase):
@@ -34,8 +33,7 @@ class TestOffersArchived(TestCase):
                     'volunteer{0}{1}@example.com'.format(idx + 1, i),
                     'password',
                 )
-                userprofile = UserProfile(user=user)
-                userprofile.save()
+                userprofile = user.userprofile
                 userprofile.organizations.add(org)
                 userprofile.save()
 

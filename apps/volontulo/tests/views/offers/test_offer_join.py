@@ -10,7 +10,6 @@ from django.test import TestCase
 
 from apps.volontulo.models import Offer
 from apps.volontulo.models import Organization
-from apps.volontulo.models import UserProfile
 
 
 class TestOffersJoin(TestCase):
@@ -47,8 +46,7 @@ class TestOffersJoin(TestCase):
             'vol123',
         )
         cls.volunteer.save()
-        cls.volunteer_profile = UserProfile(user=cls.volunteer)
-        cls.volunteer_profile.save()
+        cls.volunteer_profile = cls.volunteer.userprofile
 
     def setUp(self):
         """Set up each test."""

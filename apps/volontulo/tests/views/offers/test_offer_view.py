@@ -10,7 +10,6 @@ from django.test import TestCase
 
 from apps.volontulo.models import Offer
 from apps.volontulo.models import Organization
-from apps.volontulo.models import UserProfile
 
 
 class TestOffersView(TestCase):
@@ -31,10 +30,8 @@ class TestOffersView(TestCase):
             '123admin'
         )
         administrator.save()
-        cls.administrator_profile = UserProfile(
-            user=administrator,
-            is_administrator=True,
-        )
+        cls.administrator_profile = administrator.userprofile
+        cls.administrator_profile.is_administrator = True
         cls.administrator_profile.save()
         cls.offer = Offer.objects.create(
             organization=organization,
@@ -61,11 +58,7 @@ class TestOffersView(TestCase):
         ) for i in range(10)]
         for i in range(10):
             volunteers[i].save()
-        cls.volunteers_profiles = [
-            UserProfile(user=volunteers[i]) for i in range(10)
-        ]
-        for i in range(10):
-            cls.volunteers_profiles[i].save()
+        cls.volunteers_profiles = [volunteer.userprofile for volunteer in volunteers]
         for i in range(0, 10, 2):
             cls.offer.volunteers.add(cls.volunteers_profiles[i].user)
 

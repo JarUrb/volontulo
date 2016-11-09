@@ -8,7 +8,6 @@ from django.test import TestCase
 
 from apps.volontulo.models import Organization
 from apps.volontulo.models import User
-from apps.volontulo.models import UserProfile
 
 
 class TestUserProfile(TestCase):
@@ -18,37 +17,38 @@ class TestUserProfile(TestCase):
         u"""Set up each test."""
 
         # volunteer user
-        self.volunteer_user = UserProfile.objects.create(
-            user=User.objects.create_user(
-                username='volunteer@example.com',
-                email='volunteer@example.com',
-                password='volunteer',
-            ),
-            is_administrator=False,
+        user = User.objects.create_user(
+            username='volunteer@example.com',
+            email='volunteer@example.com',
+            password='volunteer',
         )
+        self.volunteer_user = user.userprofile
+        self.volunteer_user.is_administrator = False
+        self.volunteer_user.save()
 
         # organization user
-        self.organization_user = UserProfile.objects.create(
-            user=User.objects.create_user(
-                username='organization@example.com',
-                email='organization@example.com',
-                password='organization',
-            ),
-            is_administrator=False,
+        user = User.objects.create_user(
+            username='organization@example.com',
+            email='organization@example.com',
+            password='organization',
         )
+        self.organization_user = user.userprofile
+        self.organization_user.is_administrator = False
+        self.organization_user.save()
+
         self.organization_user.organizations.add(
             Organization.objects.create(name=u'Organization')
         )
 
         # administrator user
-        self.administrator_user = UserProfile.objects.create(
-            user=User.objects.create_user(
-                username='administrator@example.com',
-                email='administrator@example.com',
-                password='administrator',
-            ),
-            is_administrator=True
+        user = User.objects.create_user(
+            username='administrator@example.com',
+            email='administrator@example.com',
+            password='administrator',
         )
+        self.administrator_user = user.userprofile
+        self.administrator_user.is_administrator = True
+        self.administrator_user.save()
 
     def test__string_reprezentation(self):
         u"""String reprezentation of an userprofile object."""

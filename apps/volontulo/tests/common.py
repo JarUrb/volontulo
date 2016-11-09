@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 from apps.volontulo.models import Offer
 from apps.volontulo.models import Organization
-from apps.volontulo.models import UserProfile
+
 
 COMMON_OFFER_DATA = {
     'organization': None,
@@ -32,7 +32,7 @@ def initialize_empty_volunteer():
         last_name=u'Brzęczyszczykiewicz',
     )
     volunteer_user1.save()
-    userprofile = UserProfile.objects.create(user=volunteer_user1)
+    userprofile = volunteer_user1.userprofile
     userprofile.phone_no = '333666999'
     userprofile.save()
     return volunteer_user1
@@ -54,9 +54,7 @@ def initialize_empty_organization():
         last_name=u'Organization1Lastname',
     )
     organization_user1.save()
-    organization_profile1 = UserProfile.objects.create(
-        user=organization_user1,
-    )
+    organization_profile1 = organization_user1.userprofile
     organization_profile1.organizations.add(organization1)
     return organization1
 
@@ -70,7 +68,6 @@ def initialize_filled_volunteer_and_organization():
         'volunteer2'
     )
     volunteer_user2.save()
-    UserProfile.objects.create(user=volunteer_user2)
 
     # create organization user to create offers
     organization2 = Organization.objects.create(name=u'Organization 2')
@@ -82,9 +79,7 @@ def initialize_filled_volunteer_and_organization():
         'organization2'
     )
     organization_user2.save()
-    organization_profile2 = UserProfile.objects.create(
-        user=organization_user2,
-    )
+    organization_profile2 = organization_user2.userprofile
     organization_profile2.organizations.add(organization2)
 
     # create organization offers and assign volunteer to them
@@ -147,9 +142,7 @@ def initialize_empty_organizations():
             'organization{}'.format(i)
         )
         organization_user.save()
-        user_profile = UserProfile.objects.create(
-            user=organization_user,
-        )
+        user_profile = organization_user.userprofile
         user_profile.organizations.add(organization)
 
 
@@ -164,7 +157,7 @@ def initialize_administrator(
     """
     administrator1 = User.objects.create_user(username, email, password)
     administrator1.save()
-    administrator_profile = UserProfile.objects.create(user=administrator1)
+    administrator_profile = administrator1.userprofile
     administrator_profile.is_administrator = True
     administrator_profile.save()
     return administrator1

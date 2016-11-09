@@ -8,7 +8,6 @@ from django.contrib.auth.models import User
 
 from apps.volontulo.models import Offer
 from apps.volontulo.models import Organization
-from apps.volontulo.models import UserProfile
 
 
 class TestOffersCommons(object):
@@ -57,8 +56,7 @@ class TestOffersCommons(object):
             '123volunteer'
         )
 
-        cls.volunteer = UserProfile(user=volunteer_user)
-        cls.volunteer.save()
+        cls.volunteer = volunteer_user.userprofile
 
         organization_user = User.objects.create_user(
             'cls.organization@example.com',
@@ -66,10 +64,7 @@ class TestOffersCommons(object):
             '123org'
         )
 
-        cls.organization_profile = UserProfile(
-            user=organization_user,
-        )
-        cls.organization_profile.save()
+        cls.organization_profile = organization_user.userprofile
         cls.organization_profile.organizations.add(cls.organization)
 
         admin_user = User.objects.create_user(
@@ -78,8 +73,6 @@ class TestOffersCommons(object):
             '123admin'
         )
 
-        cls.admin = UserProfile(
-            user=admin_user,
-            is_administrator=True,
-        )
+        cls.admin = admin_user.userprofile
+        cls.admin.is_administrator = True
         cls.admin.save()

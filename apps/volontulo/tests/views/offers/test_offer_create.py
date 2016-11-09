@@ -10,7 +10,6 @@ from django.test import TestCase
 
 from apps.volontulo.models import Offer
 from apps.volontulo.models import Organization
-from apps.volontulo.models import UserProfile
 
 
 class TestOffersCreate(TestCase):
@@ -31,19 +30,13 @@ class TestOffersCreate(TestCase):
             '123org'
         )
         organization_user.save()
-        cls.organization_profile = UserProfile(
-            user=organization_user,
-        )
-        cls.organization_profile.save()
+        cls.organization_profile = organization_user.userprofile
         cls.organization_profile.organizations.add(cls.organization)
 
-        no_org_user = User.objects.create_user(
+        User.objects.create_user(
             'no_organ@example.com',
             'no_organ@example.com',
             '123no_org'
-        )
-        UserProfile.objects.create(
-            user=no_org_user,
         )
 
     def setUp(self):

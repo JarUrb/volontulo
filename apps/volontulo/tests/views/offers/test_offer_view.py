@@ -58,7 +58,8 @@ class TestOffersView(TestCase):
         ) for i in range(10)]
         for i in range(10):
             volunteers[i].save()
-        cls.volunteers_profiles = [volunteer.userprofile for volunteer in volunteers]
+        cls.volunteers_profiles = [
+            volunteer.userprofile for volunteer in volunteers]
         for i in range(0, 10, 2):
             cls.offer.volunteers.add(cls.volunteers_profiles[i].user)
 

@@ -1,10 +1,17 @@
+"""
+.. module:: test_superuser
+"""
+
 from django.contrib.auth.models import User
 from django.test import Client
 from django.test import TestCase
 
 
 class TestUserCreatedWithManagePyCreatesuperuser(TestCase):
-    """Check if user created with manage.py createsuperuser can log in and see own profile."""
+    """
+    Check if user created with "manage.py createsuperuser"
+    can log in and see own profile.
+    """
     @classmethod
     def setUpTestData(cls):
         cls.superuser_data = {
@@ -50,7 +57,10 @@ class TestUserCreatedWithManagePyCreatesuperuser(TestCase):
         )
 
     def test_log_into_admin_panel_and_go_to_logged_user_profile_view(self):
-        """Check if user can log into admin panel and then see own profile page (logged_user_profile view)."""
+        """
+        Check if user can log into admin panel and then see
+        own profile page (logged_user_profile view).
+        """
         self.client.post(
             '/admin/login/',
             {

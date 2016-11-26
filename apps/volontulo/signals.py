@@ -13,7 +13,7 @@ from .models import UserProfile
 def create_profile(sender, instance, created, **kwargs):
     """
     Create apps.volontulo.models.UserProfile object
-    when django.contrib.auth.models.User object screated.
+    when django.contrib.auth.models.User object created.
     """
     # pylint: disable=unused-argument
     if created:
